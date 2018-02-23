@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Weather information</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        function getWeatherInfo() {
+            var url = '/get_weather_info?city=' + $('#enter_city').val();
+            $.get(url, function(data, status){
+                console.log(data);
+                $('#output').append("<p> See: " + JSON.stringify(data) + "</p>");
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+   <input type="text" id="enter_city">
+    <button onClick="getWeatherInfo()">Get Weather Info</button>
+    <div id="output"></div>
+</body>
+
+</html>
