@@ -58,7 +58,7 @@
 
           </div>
         </div>
-        <div class="row row-list" v-show="output.formattedAddress">
+        <div class="row row-list" v-if="output.formattedAddress">
             <div class="col-xs-2 container-img"><img src="/weather.png"> </div>
             <div class="col-xs-5">
                 <h3>{{output.formattedAddress}}</h3>
@@ -134,7 +134,7 @@
         </div>
 -->
         <div class="row">
-            <div class="jumbotron" style="margin-top:20px" v-show="output.summary">
+            <div class="jumbotron" style="margin-top:20px" v-if="output.summary">
                 <h2>{{output.summary}}</h2>
             </div>
         </div>
