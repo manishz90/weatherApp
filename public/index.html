@@ -12,7 +12,22 @@
           <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.13/vue-resource.min.js"></script>
             <style>
-                body { padding-top: 70px; }
+                body { 
+                    font-family: tahoma, helvetica, arial, sans-serif;
+                    font-size: 13px;
+                    text-align: center;
+/*                    background: #000;*/
+/*                    color: #ffff;*/
+/*                    padding-top: 12px;*/
+/*                    line-height: 2;*/
+                    background-image: url('/weather-report.jpg');
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    background-size: 100%;
+                    opacity: 1;
+                    filter:alpha(opacity=80);
+                    padding-top: 70px;
+                }
                 .jumbotron{
                     border:1px solid grey;
                     
@@ -31,6 +46,8 @@
                     100% { transform: rotate(360deg); }
                 }
                 table {
+                    font-size: 16px;
+                    font-weight: 300;
 /*
                     background-image: url("/graph.png");
                     opacity: 0.6;
@@ -64,7 +81,7 @@
         <div class="row">
             <div class="col-xs-12 well" style="">
               <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-xs-4"
-                     v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:5px">
+                     v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:5px" autofocus>
               <a href="#" class="fa fa-search" class="col-xs-4" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
               </a>
               <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" class="col-xs-4" style="font-size:2em; margin-right:5px"></a>
@@ -73,7 +90,7 @@
         </div>
         <div class="row loader" v-if="loading"></div>
         <div class="row row-list" v-if="output.formattedAddress && loading !== true">
-            <div class="col-xs-2 container-img"><img src="/weather.png"> </div>
+<!--            <div class="col-xs-2 container-img"><img src="/weather.png"> </div>-->
             <div class="col-xs-5">
                 <h3>{{output.formattedAddress}}</h3>
                 <h1 class="fa fa-thermometer-half" style="font-size:3em;"> - {{output.temp}}&#8457; / 
@@ -89,7 +106,7 @@
             </div>
             <div class="col-xs-4">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="text-center">
                       <tr>
                         <th>Weather parameter</th>
                         <th>Value</th>
@@ -126,7 +143,7 @@
             
         </div> 
         <div class="row">
-            <div class="jumbotron" style="margin-top:20px" v-if="(output.summary && loading !== true)">
+            <div class="text-left" style="margin-top:20px" v-if="(output.summary && loading !== true)">
                 <h2>{{output.summary}}</h2>
             </div>
         </div>
