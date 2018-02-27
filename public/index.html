@@ -17,6 +17,19 @@
                     border:1px solid grey;
                     
                 }
+                .loader {
+                    border: 16px solid #f3f3f3; /* Light grey */
+                    border-top: 16px solid #3498db; /* Blue */
+                    border-radius: 50%;
+                    width: 120px;
+                    height: 120px;
+                    animation: spin 2s linear infinite;
+                }
+
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
                 table {
 /*
                     background-image: url("/graph.png");
@@ -47,7 +60,7 @@
       </div>
     </div>
 
-    <div class="container" id="vueApp">        
+    <div class="container" id="vueApp">
         <div class="row">
             <div class="col-xs-12 well" style="">
               <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-xs-4"
@@ -58,7 +71,8 @@
 
           </div>
         </div>
-        <div class="row row-list" v-if="output.formattedAddress">
+        <div class="row loader" v-if="loading"></div>
+        <div class="row row-list" v-if="output.formattedAddress && loading !== true">
             <div class="col-xs-2 container-img"><img src="/weather.png"> </div>
             <div class="col-xs-5">
                 <h3>{{output.formattedAddress}}</h3>
@@ -111,30 +125,8 @@
             </div>
             
         </div> 
-<!--
         <div class="row">
-            <div class="col-xs-12">
-                <div class="card col-sx-6" v-show="output.formattedAddress">
-                    <img class="card-img-top" src="/weather.png" alt="Card image cap">
-                    <div>
-                        <h5 class="card-title">{{output.formattedAddress}}</h5>
-                        <p class="card-text">Temperature: {{output.temp}}</p>
-                        <p class="card-text">It feels like: {{output.apparentTemperature}}</p>
-                    </div>
-                </div>
-                <div class="card col-sx-6" v-show="output.formattedAddress">
-                    <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-                    <div class="card-img-overlay">
-                        <h4 class="card-title">John Doe</h4>
-                        <p class="card-text">Some example text.</p>
-                        <a href="#" class="btn btn-primary">See Profile</a>
-                    </div>
-                </div>
-            </div>
-        </div>
--->
-        <div class="row">
-            <div class="jumbotron" style="margin-top:20px" v-if="output.summary">
+            <div class="jumbotron" style="margin-top:20px" v-if="(output.summary && loading !== true)">
                 <h2>{{output.summary}}</h2>
             </div>
         </div>
