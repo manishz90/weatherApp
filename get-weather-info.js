@@ -33,11 +33,12 @@ function getWeatherInfo (address) {
         output.lat = lat;
         output.lng = lng;
         output.formattedAddress = response.data.results[0].formatted_address;
-        var weatherURL = 'https://api.darksky.net/forecast/fb22c011e733f8ceb47c186fc5010f8d/' + lat + ',' + lng;
+        var weatherURL = 'https://api.darksky.net/forecast/fb22c011e733f8ceb47c186fc5010f8d/' + lat + ',' + lng + '?exclude=["daily","alerts"]';
 
         return axios.get(weatherURL);
 
         }).then((response) => {
+            console.log(response.data);
           var temp = response.data.currently.temperature;
           var apparentTemperature = response.data.currently.apparentTemperature;
           output.summary = response.data.hourly.summary;
@@ -52,6 +53,9 @@ function getWeatherInfo (address) {
           output.uvIndex = response.data.currently.uvIndex;
           output.visibility = response.data.currently.visibility;
           output.ozone = response.data.currently.ozone;
+          output.dewPoint = response.data.currently.dewPoint;
+          output.nearestStormBearing = response.data.currently.nearestStormBearing;
+          output.nearestStormDistance = response.data.currently.nearestStormDistance;
             console.log("output", output);
           resolve(output);
           return output;

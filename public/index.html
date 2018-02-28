@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Weather information</title>
           <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,26 +13,24 @@
           <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.13/vue-resource.min.js"></script>
             <style>
                 body { 
+                    padding-top: 75px;
                     font-family: tahoma, helvetica, arial, sans-serif;
                     font-size: 13px;
-                    text-align: center;
-/*                    background: #000;*/
-/*                    color: #ffff;*/
-/*                    padding-top: 12px;*/
-/*                    line-height: 2;*/
-                    background-image: url('/weather-report.jpg');
-                    background-repeat: no-repeat;
-                    background-attachment: fixed;
-                    background-size: 100%;
-                    opacity: 1;
-                    filter:alpha(opacity=80);
-                    padding-top: 70px;
-                }
+                    background: url('weather-report.jpg') no-repeat fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+              }
                 .jumbotron{
                     border:1px solid grey;
                     
                 }
                 .loader {
+                    position: absolute;
+                    left: 35%;
+                    top: 40%;
+                    margin:0px auto;
                     border: 16px solid #f3f3f3; /* Light grey */
                     border-top: 16px solid #3498db; /* Blue */
                     border-radius: 50%;
@@ -78,22 +76,22 @@
     </div>
 
     <div class="container" id="vueApp">
-        <div class="row">
-            <div class="col-xs-12 well" style="">
-              <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-xs-4"
-                     v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:5px" autofocus>
-              <a href="#" class="fa fa-search" class="col-xs-4" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
+<!--        <div class="row">-->
+<!--            <div class="col-xs-12" style="">-->
+              <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-sm-4 col-xs-12 "
+                     v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:2px" autofocus>
+              <a href="#" class="fa fa-search" class="col-xs-6 col-sm-4" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
               </a>
-              <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" class="col-xs-4" style="font-size:2em; margin-right:5px"></a>
+              <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" class="col-xs-6 col-sm-4" style="font-size:2em;margin-bottom:30px"></a>
 
-          </div>
-        </div>
+<!--          </div>-->
+<!--        </div>-->
         <div class="row loader" v-if="loading"></div>
-        <div class="row row-list" v-if="output.formattedAddress && loading !== true">
+        <div class="row row-list text-center" v-if="output.formattedAddress && loading !== true">
 <!--            <div class="col-xs-2 container-img"><img src="/weather.png"> </div>-->
-            <div class="col-xs-5">
+            <div class="col-sm-4 col-xs-12">
                 <h3>{{output.formattedAddress}}</h3>
-                <h1 class="fa fa-thermometer-half" style="font-size:3em;"> - {{output.temp}}&#8457; / 
+                <h1 class="fa fa-thermometer-half" style="font-size:3em;"> : {{output.temp}}&#8457; / 
                     <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
                     </span>
                 </h1>
@@ -104,7 +102,7 @@
                     </h5>
                 </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4 col-xs-12">
                 <table class="table table-bordered">
                     <thead class="text-center">
                       <tr>
@@ -115,19 +113,19 @@
                     <tbody>
                       <tr>
                         <td>Humidity</td>
-                        <td>{{output.humidity}}</td>
+                        <td>{{output.humidity}} - RH</td>
                       </tr>
                       <tr>
                         <td>Pressure</td>
-                        <td>{{output.pressure}}</td>
+                        <td>{{output.pressure}} - millibars</td>
                       </tr>
                       <tr>
                         <td>Wind speed</td>
-                        <td>{{output.windSpeed}}</td>
+                        <td>{{output.windSpeed}} - MPH</td>
                       </tr>
                         <tr>
                         <td>Cloud cover</td>
-                        <td>{{output.cloudCover}}</td>
+                        <td>{{output.cloudCover}} - okta</td>
                       </tr>
                       <tr>
                         <td>UV index</td>
@@ -135,15 +133,51 @@
                       </tr>
                       <tr>
                         <td>Ozone</td>
-                        <td>{{output.ozone}}</td>
+                        <td>{{output.ozone}} - dobson</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <table class="table table-bordered">
+                    <thead class="text-center">
+                      <tr>
+                        <th>Weather parameter</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Humidity</td>
+                        <td>{{output.humidity}} - RH</td>
+                      </tr>
+                      <tr>
+                        <td>Pressure</td>
+                        <td>{{output.pressure}} - millibars</td>
+                      </tr>
+                      <tr>
+                        <td>Wind speed</td>
+                        <td>{{output.windSpeed}} - MPH</td>
+                      </tr>
+                        <tr>
+                        <td>Cloud cover</td>
+                        <td>{{output.cloudCover}} - okta</td>
+                      </tr>
+                      <tr>
+                        <td>UV index</td>
+                        <td>{{output.uvIndex}}</td>
+                      </tr>
+                      <tr>
+                        <td>Ozone</td>
+                        <td>{{output.ozone}} - dobson</td>
                       </tr>
                     </tbody>
                 </table>
             </div>
             
         </div> 
-        <div class="row">
-            <div class="text-left" style="margin-top:20px" v-if="(output.summary && loading !== true)">
+        <div class="row" v-if="(output.summary && loading !== true)">
+            <div class="text-left" style="margin-top:20px">
                 <h2>{{output.summary}}</h2>
             </div>
         </div>

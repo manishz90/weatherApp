@@ -36,7 +36,7 @@
                     var resultArray = event.results[0][0].transcript.split(' ');
                     if (resultArray[0]) {
                         app.$data.city = resultArray[0];
-                        app.$data.loading = true;
+                        this.$data.loading = true;
                         app.getWeatherInfo();    
                     }
                 };
@@ -47,8 +47,8 @@
                     console.log('Speech recognition service disconnected');
                 };
         },
-        speechRecoginationStart :  () => {
-            this.recognition.start();
+        speechRecoginationStart :  function() => {
+            app.recognition.start();
         }
     }
 });
