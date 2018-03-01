@@ -1,188 +1,143 @@
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Weather information</title>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-          <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.13/vue-resource.min.js"></script>
-            <style>
-                body { 
-                    padding-top: 75px;
-                    font-family: tahoma, helvetica, arial, sans-serif;
-                    font-size: 13px;
-                    background: url('weather-report.jpg') no-repeat fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-              }
-                .jumbotron{
-                    border:1px solid grey;
-                    
-                }
-                .loader {
-                    position: absolute;
-                    left: 35%;
-                    top: 40%;
-                    margin:0px auto;
-                    border: 16px solid #f3f3f3; /* Light grey */
-                    border-top: 16px solid #3498db; /* Blue */
-                    border-radius: 50%;
-                    width: 120px;
-                    height: 120px;
-                    animation: spin 2s linear infinite;
-                }
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Weather information</title>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+              <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.13/vue-resource.min.js"></script>
+              <link rel="stylesheet" href="style/style.css">
+        </head>
 
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                table {
-                    font-size: 16px;
-                    font-weight: 300;
-/*
-                    background-image: url("/graph.png");
-                    opacity: 0.6;
-*/
-                }
-            </style>
-    </head>
-
-    <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Brand</a>
+        <body v-cloak>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Brand</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
 
-    <div class="container" id="vueApp">
-<!--        <div class="row">-->
-<!--            <div class="col-xs-12" style="">-->
+        <div class="container" id="vueApp">
               <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-sm-4 col-xs-12 "
                      v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:2px" autofocus>
               <a href="#" class="fa fa-search" class="col-xs-6 col-sm-4" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
               </a>
               <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" class="col-xs-6 col-sm-4" style="font-size:2em;margin-bottom:30px"></a>
-
-<!--          </div>-->
-<!--        </div>-->
-        <div class="row loader" v-if="loading"></div>
-        <div class="row row-list text-center" v-if="output.formattedAddress && loading !== true">
-<!--            <div class="col-xs-2 container-img"><img src="/weather.png"> </div>-->
-            <div class="col-sm-4 col-xs-12">
-                <h3>{{output.formattedAddress}}</h3>
-                <h1 class="fa fa-thermometer-half" style="font-size:3em;"> : {{output.temp}}&#8457; / 
-                    <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
-                    </span>
-                </h1>
-                <div>
-                    <h5> - Yeah, it feels like: {{output.apparentTemperature}}&#8457; /
+            <div class="row loader" v-if="loading"></div>
+            <div class="row text-left" style="margin-top:20px" v-if="output.message && loading !== true">
+                <h2>{{output.message}}</h2>
+            </div>
+            <div class="row row-list text-center" v-if="output.formattedAddress && loading !== true">
+                <div class="col-sm-4 col-xs-12">
+                    <h3>{{output.formattedAddress}}</h3>
+                    <h1 class="fa fa-thermometer-half" style="font-size:3em;"> : {{output.temp}}&#8457; / 
                         <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
                         </span>
-                    </h5>
+                    </h1>
+                    <div>
+                        <h5> - Yeah, it feels like: {{output.apparentTemperature}}&#8457; /
+                            <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="text-center">Weather parameter</th>
+                            <th class="text-center">Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Humidity</td>
+                            <td>{{output.humidity}}</td>
+                          </tr>
+                          <tr>
+                            <td>Pressure</td>
+                            <td>{{output.pressure}}</td>
+                          </tr>
+                          <tr>
+                            <td>Wind speed</td>
+                            <td>{{output.windSpeed}}</td>
+                          </tr>
+                            <tr>
+                            <td>Cloud cover</td>
+                            <td>{{output.cloudCover}}</td>
+                          </tr>
+                          <tr>
+                            <td>UV index</td>
+                            <td>{{output.uvIndex}}</td>
+                          </tr>
+                          <tr>
+                            <td>Ozone</td>
+                            <td>{{output.ozone}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="text-center">Weather Parameter</th>
+                            <th class="text-center">Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Precipitation Probability</td>
+                            <td>{{output.precipProbability}}</td>
+                          </tr>
+                          <tr>
+                            <td>Precipitation Type</td>
+                            <td>{{output.precipType}}</td>
+                          </tr>
+                          <tr>
+                            <td>Precipitation Accumulation</td>
+                            <td>{{output.precipAccumulation}}</td>
+                          </tr>
+                            <tr>
+                            <td>Visibility</td>
+                            <td>{{output.visibility}}</td>
+                          </tr>
+                          <tr>
+                            <td>Nearest Storm Distance</td>
+                            <td>{{output.nearestStormDistance}}</td>
+                          </tr>
+                          <tr>
+                            <td>Nearest Storm Bearing</td>
+                            <td>{{output.nearestStormBearing}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+            <div class="row" v-if="output.summary">
+                <div class="text-left" style="margin-top:20px">
+                    <h2>{{output.summary}}</h2>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-12">
-                <table class="table table-bordered">
-                    <thead class="text-center">
-                      <tr>
-                        <th>Weather parameter</th>
-                        <th>Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Humidity</td>
-                        <td>{{output.humidity}} - RH</td>
-                      </tr>
-                      <tr>
-                        <td>Pressure</td>
-                        <td>{{output.pressure}} - millibars</td>
-                      </tr>
-                      <tr>
-                        <td>Wind speed</td>
-                        <td>{{output.windSpeed}} - MPH</td>
-                      </tr>
-                        <tr>
-                        <td>Cloud cover</td>
-                        <td>{{output.cloudCover}} - okta</td>
-                      </tr>
-                      <tr>
-                        <td>UV index</td>
-                        <td>{{output.uvIndex}}</td>
-                      </tr>
-                      <tr>
-                        <td>Ozone</td>
-                        <td>{{output.ozone}} - dobson</td>
-                      </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm-4 col-xs-12">
-                <table class="table table-bordered">
-                    <thead class="text-center">
-                      <tr>
-                        <th>Weather parameter</th>
-                        <th>Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Humidity</td>
-                        <td>{{output.humidity}} - RH</td>
-                      </tr>
-                      <tr>
-                        <td>Pressure</td>
-                        <td>{{output.pressure}} - millibars</td>
-                      </tr>
-                      <tr>
-                        <td>Wind speed</td>
-                        <td>{{output.windSpeed}} - MPH</td>
-                      </tr>
-                        <tr>
-                        <td>Cloud cover</td>
-                        <td>{{output.cloudCover}} - okta</td>
-                      </tr>
-                      <tr>
-                        <td>UV index</td>
-                        <td>{{output.uvIndex}}</td>
-                      </tr>
-                      <tr>
-                        <td>Ozone</td>
-                        <td>{{output.ozone}} - dobson</td>
-                      </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-        </div> 
-        <div class="row" v-if="(output.summary && loading !== true)">
-            <div class="text-left" style="margin-top:20px">
-                <h2>{{output.summary}}</h2>
-            </div>
         </div>
-    </div>
-        <script src="bundle.js"></script>
-    </body>
-
-    </html>
+            <script src="js/bundle.js"></script>
+        </body>
+        </html>

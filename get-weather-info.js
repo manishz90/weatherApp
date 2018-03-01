@@ -33,7 +33,7 @@ function getWeatherInfo (address) {
         output.lat = lat;
         output.lng = lng;
         output.formattedAddress = response.data.results[0].formatted_address;
-        var weatherURL = 'https://api.darksky.net/forecast/fb22c011e733f8ceb47c186fc5010f8d/' + lat + ',' + lng + '?exclude=["daily","alerts"]';
+        var weatherURL = 'https://api.darksky.net/forecast/fb22c011e733f8ceb47c186fc5010f8d/' + lat + ',' + lng + '?exclude="daily","alerts"';
 
         return axios.get(weatherURL);
 
@@ -46,17 +46,20 @@ function getWeatherInfo (address) {
           output.temp = temp;
           output.apparentTemperature = apparentTemperature;
           output.nearestStormDistance
-          output.humidity = response.data.currently.humidity;
-          output.pressure = response.data.currently.pressure;
-          output.windSpeed = response.data.currently.windSpeed;
-          output.cloudCover = response.data.currently.cloudCover;
-          output.uvIndex = response.data.currently.uvIndex;
-          output.visibility = response.data.currently.visibility;
-          output.ozone = response.data.currently.ozone;
-          output.dewPoint = response.data.currently.dewPoint;
-          output.nearestStormBearing = response.data.currently.nearestStormBearing;
-          output.nearestStormDistance = response.data.currently.nearestStormDistance;
-            console.log("output", output);
+          output.humidity = response.data.currently.humidity ? response.data.currently.humidity + " RH" : "Not available";
+          output.pressure = response.data.currently.pressure ? response.data.currently.pressure + " millibars" : "Not available";
+          output.windSpeed = response.data.currently.windSpeed ? response.data.currently.windSpeed + " MPH" : "Not available";
+          output.cloudCover = response.data.currently.cloudCover ? response.data.currently.cloudCover + " okta" : "Not available";
+          output.uvIndex = response.data.currently.uvIndex ? response.data.currently.uvIndex : "Not available";
+          output.ozone = response.data.currently.ozone ? response.data.currently.ozone + " dobson" : "Not available";
+          output.dewPoint = response.data.currently.dewPoint ? response.data.currently.dewPoint + " &#8457" : "Not available";
+          output.nearestStormBearing = response.data.currently.nearestStormBearing ? response.data.currently.nearestStormBearing + " degrees" : "Not available";
+          output.nearestStormDistance = response.data.currently.nearestStormDistance ? response.data.currently.nearestStormDistance + " miles" : "Not available";
+          output.precipAccumulation = response.data.hourly.precipAccumulation ? response.data.hourly.precipAccumulation + " inches" : "Not available";
+          output.visibility = response.data.currently.visibility ? response.data.currently.visibility + " miles" : "Not available";
+          output.precipType = response.data.currently.precipType ? response.data.currently.precipType : "Not available";
+          output.precipProbability = response.data.currently.precipProbability ? response.data.currently.precipProbability : "Not available";
+          console.log("output", output);
           resolve(output);
           return output;
 

@@ -22,7 +22,7 @@
                 this.$data.loading = false;
             }
         },
-        registerSpeechRecogination : () => {
+        registerSpeechRecogination : function () {
               if (('webkitSpeechRecognition' in window)) {
                     this.recognition = new webkitSpeechRecognition();
                     this.recognition.lang = "en-US";
@@ -36,7 +36,7 @@
                     var resultArray = event.results[0][0].transcript.split(' ');
                     if (resultArray[0]) {
                         app.$data.city = resultArray[0];
-                        this.$data.loading = true;
+                        app.$data.loading = true;
                         app.getWeatherInfo();    
                     }
                 };
@@ -47,8 +47,8 @@
                     console.log('Speech recognition service disconnected');
                 };
         },
-        speechRecoginationStart :  function() => {
-            app.recognition.start();
+        speechRecoginationStart : function () {
+            this.recognition.start();
         }
     }
 });
