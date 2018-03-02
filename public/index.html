@@ -3,7 +3,6 @@
         <head>
             <meta charset="UTF-8">
             <title>Weather information</title>
-              <meta charset="utf-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,7 +13,7 @@
               <link rel="stylesheet" href="style/style.css">
         </head>
 
-        <body v-cloak>
+        <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
@@ -35,31 +34,33 @@
           </div>
         </div>
 
-        <div class="container" id="vueApp">
-              <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..."  class="col-sm-4 col-xs-12 "
+        <div class="container-fluid" id="vueApp">
+              <input type="text" id="enter_city" v-model='city' placeholder="Type-in a city name..." 
+                     class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
                      v-on:keyup.enter="getWeatherInfo" style="background-color: lightyellow; margin-right:2px" autofocus>
-              <a href="#" class="fa fa-search" class="col-xs-6 col-sm-4" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
+              <a href="#" class="fa fa-search" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="font-size:2em;" v-on:click="getWeatherInfo" v-bind:disabled="city">
               </a>
-              <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" class="col-xs-6 col-sm-4" style="font-size:2em;margin-bottom:30px"></a>
+              <a href="#" class="fa fa-microphone" v-on:click="speechRecoginationStart" 
+                 class="col-xs-6 col-sm-6 col-md-3 col-lg-3" style="font-size:2em;margin-bottom: 1.75em"></a>
             <div class="row loader" v-if="loading"></div>
             <div class="row text-left" style="margin-top:20px" v-if="output.message && loading !== true">
                 <h2>{{output.message}}</h2>
             </div>
-            <div class="row row-list text-center" v-if="output.formattedAddress && loading !== true">
-                <div class="col-sm-4 col-xs-12">
+            <div class="row row-list text-left" v-if="output.formattedAddress && loading !== true">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:-25px">
                     <h3>{{output.formattedAddress}}</h3>
                     <h1 class="fa fa-thermometer-half" style="font-size:3em;"> : {{output.temp}}&#8457; / 
                         <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
                         </span>
                     </h1>
-                    <div>
+                    <div style="margin-bottom: 1em">
                         <h5> - Yeah, it feels like: {{output.apparentTemperature}}&#8457; /
                             <span>{{new Intl.NumberFormat().format(((output.temp - 32) * 5/9))}}&#8451;
                             </span>
                         </h5>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                     <table class="table table-bordered">
                         <thead class="text-center">
                           <tr>
@@ -95,7 +96,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                     <table class="table table-bordered">
                         <thead class="text-center">
                           <tr>
@@ -132,8 +133,8 @@
                     </table>
                 </div>
             </div> 
-            <div class="row" v-if="output.summary">
-                <div class="text-left" style="margin-top:20px">
+            <div class="row" v-if="output.summary && loading !== true">
+                <div class="text-left col-xs-12" style="margin-top:1.5empx">
                     <h2>{{output.summary}}</h2>
                 </div>
             </div>
