@@ -22,12 +22,12 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:-25px">
             <h3>{{output.formattedAddress}}</h3>
             <h1 class="fa fa-thermometer-half" style="font-size:3em;"> : {{Math.round( output.temp * 10 ) / 10}}&#8457; /
-                <span>{{(Math.round((output.temp - 32) * 5/9)/10)}}&#8451;
+                <span>{{(Math.round((output.temp - 32) * 5/9 * 10)/10)}}&#8451;
                 </span>
             </h1>
             <div style="margin-bottom: 1em">
                 <h5> - Yeah, it feels like: {{Math.round(output.apparentTemperature * 10) / 10}}&#8457; /
-                    <span>{{(Math.round((output.apparentTemperature - 32) * 5/9)/10)}}&#8451;
+                    <span>{{(Math.round((output.apparentTemperature - 32) * 5/9 * 10)/10)}}&#8451;
                     </span>
                 </h5>
             </div>
